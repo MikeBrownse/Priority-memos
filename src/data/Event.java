@@ -4,28 +4,33 @@ import java.util.Calendar;
 
 public class Event {
 
-	private String title, detials;
-	private Calendar startime, deadline;
-	private int priority, state;
+	private String title, detials, priority, state;
+	private Calendar deadline;
+	private int eventID;
 		
-	Event(String title, Calendar startime, Calendar deadline, int priority, int state){
+	public Event(int eventID, String title, String priority, String state, Calendar deadline, String details){
+		this.setEventID(eventID);
 		this.setTitle(title);
-		this.setStartime(startime);
-		this.setDeadline(deadline);
 		this.setPriority(priority);
 		this.setState(state);
+		this.setDeadline(deadline);
+		this.setDetials(details);
 	}
 	
 	//写入
+	public void setEventID(int neweventID) {
+		eventID = neweventID;
+	}
+	
 	public void setTitle(String newTitle) {
 		title = newTitle;
 	}
 	
-	public void setPriority(int newPriority) {
+	public void setPriority(String newPriority) {
 		priority = newPriority;
 	}
 	
-	public void setState(int newState) {
+	public void setState(String newState) {
 		state = newState;
 	}
 	
@@ -33,15 +38,15 @@ public class Event {
 		detials = newDetials;
 	}
 	
-	public void setStartime(Calendar newStartime) {
-		startime = newStartime;
-	}
-	
 	public void setDeadline(Calendar newDeadline) {
 		deadline = newDeadline;
 	}
 	
 	//读取
+	public int getEventID() {
+		return eventID;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -50,22 +55,30 @@ public class Event {
 		return detials;
 	}
 	
-	public int getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 	
-	public int getState() {
+	public String getState() {
 		return state;
-	}
-	
-	public Calendar getStartime() {
-		return startime;
 	}
 	
 	public Calendar getDeadline() {
 		return deadline;
 	}
 	
+	public String getEventString(Event e) {
+		return null;
+	}
+	
+	public void getEventInfo(Event e) {
+		System.out.println(e.getEventID() + " "
+				+ e.getTitle() + " "
+				+ e.getPriority() + " "
+				+ e.getState() + " "
+				+ e.getStringTime(e.getDeadline()) + " "
+				+ e.getDetials());
+	}
 	//时间
 	public String getStringTime(Calendar c) {
 //		return String.format("%04d年%02d月%02日 %02d:%02d", c.get(c.YEAR), c.get(c.MONTH), c.get(c.DAY_OF_MONTH),
@@ -91,13 +104,13 @@ public class Event {
 //				+ c1.get(c.HOUR_OF_DAY) + ":" + c1.get(c.MINUTE) + ":" + c1.get(c.SECOND));
 		
 		//event + calendar test
-		Calendar stt = Calendar.getInstance();
 		Calendar ddl = Calendar.getInstance();
-		stt.set(2020, 5, 25, 23, 8);
+		Calendar ddl1 = Calendar.getInstance();
 		ddl.set(2020, 5, 30, 8, 10);
-		Event e = new Event("competetion", stt, ddl, 1, 1);
-		System.out.println(e.getStringTime(e.startime));
-		System.out.println(e.getStringTime(e.deadline));
+		ddl1.set(2020, 5, 26, 17, 18);
+		System.out.println(ddl.compareTo(ddl1));
+//		Event e = new Event(1, "hello", 1, 1, ddl, null);
+//		System.out.println(e.getStringTime(e.deadline));
 	}
 
 }
