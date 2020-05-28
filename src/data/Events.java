@@ -4,13 +4,13 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Event {
+public class Events {
 
 	private String title, detials, priority, state;
 	private Calendar deadline;
 	private int eventID;
 		
-	public Event(int eventID, String title, String priority, String state, Calendar deadline, String details){
+	public Events(int eventID, String title, String priority, String state, Calendar deadline, String details){
 		this.setEventID(eventID);
 		this.setTitle(title);
 		this.setPriority(priority);
@@ -69,7 +69,7 @@ public class Event {
 		return deadline;
 	}
 	
-	public void getEventInfo(Event e) {
+	public void getEventInfo(Events e) {
 		System.out.println(e.getEventID() + " "
 				+ e.getTitle() + " "
 				+ e.getPriority() + " "
@@ -99,7 +99,7 @@ public class Event {
 //		c1.setTime(d);
 //		System.out.println(c1.get(c.YEAR) + "-" + c1.get(c.MONTH) + "-" + c1.get(c.DAY_OF_MONTH) + " "
 //				+ c1.get(c.HOUR_OF_DAY) + ":" + c1.get(c.MINUTE) + ":" + c1.get(c.SECOND));
-		Event e = new Event(0, null, null, null, c, null);
+		Events e = new Events(0, null, null, null, c, null);
 		System.out.println(e.getStringTime(c));
 		
 		//event + calendar test

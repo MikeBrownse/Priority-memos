@@ -28,23 +28,23 @@ public class Database {
 		conn.close();
 	}
 	//单项读取,到头返回null
-	public Event read() throws NumberFormatException, SQLException, ClassNotFoundException {
-		Event e = null;
+	public Events read() throws NumberFormatException, SQLException, ClassNotFoundException {
+		Events e = null;
 		getNextID();
 		if(!rs.isAfterLast()) {
 			Calendar c = Calendar.getInstance();
 			c.setTimeInMillis(getDeadline());
-			e = new Event(getCurrentID(), getTitle(), getPriority(), getState(), c, getDetails());
+			e = new Events(getCurrentID(), getTitle(), getPriority(), getState(), c, getDetails());
 		}
 		return e;
 	}
 	//存储
-	public void save(Event e) throws SQLException, ClassNotFoundException {
+	public void save(Events e) throws SQLException, ClassNotFoundException {
 		stmt.executeUpdate("insert into todo(标题,优先级,状态,截止时间,事件详情) values('"+e.getTitle()+"','"+e.getPriority()+"','"+e.getState()+"','"+e.getDeadline().getTimeInMillis()+"','"+e.getDetials()+"')");
 		e.setEventID(getLastID());
 	}
 	//更改
-	public void change(Event e) throws SQLException {
+	public void change(Events e) throws SQLException {
 		stmt.executeUpdate("update todo set 标题='"+e.getTitle()+"',优先级='"+e.getPriority()+"',状态='"+e.getState()+"',截止时间='"+e.getDeadline().getTimeInMillis()+"',事件详情='"+e.getDetials()+"' where ID='"+e.getEventID()+"' ");		
 	}
 	//以下为私有方法
@@ -105,7 +105,7 @@ public class Database {
 //			Calendar c = Calendar.getInstance();
 //			c.set(2020, 5, 26, 20, 28);
 //			Event e = new Event(1, "hello1", "uae", "完成", c, "#hello#hello#");
-			Event e = db.read();
+			Events e = db.read();
 //			db.save(e);
 //			db.change(e);
 			e.getEventInfo(e);
