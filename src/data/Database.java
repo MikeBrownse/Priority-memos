@@ -44,8 +44,10 @@ public class Database {
 		e.setEventID(getLastID());
 	}
 	//更改
-	public void change(Events e) throws SQLException {
-		stmt.executeUpdate("update todo set 标题='"+e.getTitle()+"',优先级='"+e.getPriority()+"',状态='"+e.getState()+"',截止时间='"+e.getDeadline().getTimeInMillis()+"',事件详情='"+e.getDetials()+"' where ID='"+e.getEventID()+"' ");		
+	public void change(int eID) throws SQLException {
+//		stmt.executeUpdate("update todo set 标题='"+e.getTitle()+"',优先级='"+e.getPriority()+"',状态='"+e.getState()+"',截止时间='"+e.getDeadline().getTimeInMillis()+"',事件详情='"+e.getDetials()+"' where ID='"+e.getEventID()+"' ");
+		String fin = "完成";
+		stmt.executeUpdate("update todo set 状态='"+fin+"' where ID='"+eID+"' ");
 	}
 	//以下为私有方法
 	private int getNextID() throws SQLException {
@@ -93,30 +95,22 @@ public class Database {
 		return rs.getString("事件详情");
 	}
 	
-	public static void main(String[] args) {
-		// TODO 自动生成的方法存根
+	public static void main(String args[]) throws ClassNotFoundException, SQLException {
 		Database db = new Database();
-		try {
-			db.init();
-//			System.out.println(db.getNextID());
-//			System.out.println(db.getTitle() + db.getPriority() + db.getDeadline() + db.getDetails());
-//			System.out.println(db.getNextID());
-			//read & save
-//			Calendar c = Calendar.getInstance();
-//			c.set(2020, 5, 26, 20, 28);
-//			Event e = new Event(1, "hello1", "uae", "完成", c, "#hello#hello#");
-			Events e = db.read();
-//			db.save(e);
-//			db.change(e);
-			e.getEventInfo(e);
-			db.close();
-		} catch (ClassNotFoundException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
+		db.init();
+		Events e = db.read();
+		e.getEventInfo();
+		e = db.read();
+		e.getEventInfo();
+		db.change(e.getEventID());
+		db.close();
+		
+		Database db1 = new Database();
+		db1.init();
+		Events e1 = db1.read();
+		e1.getEventInfo();
+		e1 = db1.read();
+		e1.getEventInfo();
+		db1.close();
 	}
-
 }

@@ -69,13 +69,13 @@ public class Events {
 		return deadline;
 	}
 	
-	public void getEventInfo(Events e) {
-		System.out.println(e.getEventID() + " "
-				+ e.getTitle() + " "
-				+ e.getPriority() + " "
-				+ e.getState() + " "
-				+ e.getStringTime(e.getDeadline()) + " "
-				+ e.getDetials());
+	public void getEventInfo() {
+		System.out.println(this.getEventID() + " "
+				+ this.getTitle() + " "
+				+ this.getPriority() + " "
+				+ this.getState() + " "
+				+ this.getStringTime(this.getDeadline()) + " "
+				+ this.getDetials());
 	}
 	//时间
 	public String getStringTime(Calendar c) {
@@ -83,33 +83,4 @@ public class Events {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
 		return sdf.format(d);
 	}
-	public static void main(String[] args) {
-		// TODO 自动生成的方法存根
-		//event类测试
-//		Event eve = new Event("hello", "today", "tomorrow", 1, 0);
-//		System.out.println(eve.getTitle() + eve.getState());
-		
-		//日期生成、转换测试
-		Calendar c = Calendar.getInstance();
-		c.set(2020, 5 - 1, 25, 23, 8);//calendar类MONTH的初值为0
-//		System.out.println(c.get(c.YEAR) + "-" + c.get(c.MONTH) + "-" + c.get(c.DAY_OF_MONTH) + " "
-//				+ c.get(c.HOUR_OF_DAY) + ":" + c.get(c.MINUTE) + ":" + c.get(c.SECOND));
-//		Date d = c.getTime();
-//		Calendar c1 = Calendar.getInstance();
-//		c1.setTime(d);
-//		System.out.println(c1.get(c.YEAR) + "-" + c1.get(c.MONTH) + "-" + c1.get(c.DAY_OF_MONTH) + " "
-//				+ c1.get(c.HOUR_OF_DAY) + ":" + c1.get(c.MINUTE) + ":" + c1.get(c.SECOND));
-		Events e = new Events(0, null, null, null, c, null);
-		System.out.println(e.getStringTime(c));
-		
-		//event + calendar test
-//		Calendar ddl = Calendar.getInstance();
-//		Calendar ddl1 = Calendar.getInstance();
-//		ddl.set(2020, 5, 30, 8, 10);
-//		ddl1.set(2020, 5, 26, 17, 18);
-//		System.out.println(ddl.compareTo(ddl1));
-//		Event e = new Event(1, "hello", 1, 1, ddl, null);
-//		System.out.println(e.getStringTime(e.deadline));
-	}
-
 }

@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import data.Database;
 import data.Events;
-import data.QuickSort;
+import data.Sort;
 
 class newEventDialog extends JDialog {
 	protected newEventDialog(JFrame upperFrame) {
@@ -95,6 +95,55 @@ class newEventDialog extends JDialog {
 	}
 }
 
+class finishDialog extends JDialog {
+	protected finishDialog(JFrame upperFrame) {
+		JDialog jd = new JDialog(upperFrame, "完成待办", true);
+		Container jdc = jd.getContentPane();
+		jdc.setLayout(new GridLayout(2, 1));
+		
+		JPanel p1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel p2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JTextField IDfield = new JTextField("", 4);
+		JButton submmit = new JButton("完成");
+		
+		submmit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				Database db1 = new Database();
+				try {
+					db1.init();
+					System.out.println(IDfield.getText());
+					System.out.println(Integer.parseInt(IDfield.getText()));
+					db1.change(Integer.parseInt(IDfield.getText()));
+					db1.close();
+				} catch (ClassNotFoundException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+				jd.dispose();
+			}
+		});
+		
+		p1.add(new JLabel("待办ID："));
+		p1.add(IDfield);
+		p2.add(submmit);
+		
+		jdc.add(p1);
+		jdc.add(p2);
+		
+		jd.setSize(200, 100);
+		jd.setResizable(false);
+		jd.setLocationRelativeTo(null);
+		jd.setVisible(true);
+	}
+}
+
 public class MainProceed extends JFrame {
 
 	MainProceed() throws NumberFormatException, ClassNotFoundException, SQLException {
@@ -114,7 +163,7 @@ public class MainProceed extends JFrame {
 		JPanel text4 = new JPanel(new BorderLayout());
 		
 		final JButton newEvent = new JButton("新待办");
-		final JButton refresh = new JButton("刷新");
+		final JButton finish = new JButton("完成待办");
 		
 		newEvent.addActionListener(new ActionListener() {
 			@Override
@@ -137,11 +186,12 @@ public class MainProceed extends JFrame {
 			}
 		});
 		
-		refresh.addActionListener(new ActionListener() {
+		finish.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
+				new finishDialog(f);
 				f.dispose();
 				try {
 					new MainProceed();
@@ -195,18 +245,19 @@ public class MainProceed extends JFrame {
 		}
 		db.close();
 		
-		QuickSort.quickSort(iaearr, 0, iaecnt - 1);
-		QuickSort.quickSort(ibuarr, 0, ibucnt - 1);
-		QuickSort.quickSort(ubearr, 0, ubecnt - 1);
-		QuickSort.quickSort(uauarr, 0, uaucnt - 1);		
+		Sort.quickSort(iaearr, 0, iaecnt - 1);
+		Sort.quickSort(ibuarr, 0, ibucnt - 1);
+		Sort.quickSort(ubearr, 0, ubecnt - 1);
+		Sort.quickSort(uauarr, 0, uaucnt - 1);
+		iaearr = Sort.Q(iaearr, iaecnt);
+		ibuarr = Sort.Q(ibuarr, ibucnt);
+		ubearr = Sort.Q(ubearr, ubecnt);
+		uauarr = Sort.Q(uauarr, uaucnt);
 		
 		JTable iaetable = GetTable.getTable(iaearr, iaecnt);
 		JTable ibutable = GetTable.getTable(ibuarr, ibucnt);
 		JTable uautable = GetTable.getTable(uauarr, uaucnt);
 		JTable ubetable = GetTable.getTable(ubearr, ubecnt);
-		
-//		JCheckBox jc1 = new JCheckBox();
-//		iaetable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jc1));
 		
 		iaetable.setRowHeight(22);
 		ibutable.setRowHeight(22);
@@ -219,7 +270,7 @@ public class MainProceed extends JFrame {
 		JScrollPane ubescrollPane = new JScrollPane(ubetable);
 		
 		p5.add(newEvent);
-		p5.add(refresh);
+		p5.add(finish);
 		text1.add(new JLabel("重要且紧急", JLabel.CENTER), BorderLayout.SOUTH);
 		text2.add(new JLabel("重要但不紧急", JLabel.CENTER), BorderLayout.SOUTH);
 		text3.add(new JLabel("不重要但紧急", JLabel.CENTER), BorderLayout.SOUTH);

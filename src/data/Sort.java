@@ -1,6 +1,9 @@
 package data;
 
-public class QuickSort {
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Sort {
 	public static void quickSort(Events[] arr,int low,int high){
         int i,j;
         Events temp, t;
@@ -37,15 +40,25 @@ public class QuickSort {
         //递归调用右半数组
         quickSort(arr, j+1, high);
     }
- 
- 
-    public static void main(String[] arrrgs){
-//        int[] arr = {10,7,2,4,7,62,3,4,2,1,8,9,19};  
-    	Events[] arr = new Events[100];
-        quickSort(arr, 0, arr.length-1);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
-        
-    }
+	
+	public static Events[] Q(Events[] arr, int arrcnt) {
+		Queue<Events> queue = new LinkedList<Events>();
+		int cntQ = 0, newarrcnt = 0;
+		Events[] newarr = new Events[arrcnt];
+		
+		for(int cnt = 0; cnt < arrcnt; cnt++) {
+			if(arr[cnt].getState().equals("完成")) {
+				queue.offer(arr[cnt]);
+				cntQ++;
+			}else {
+				newarr[newarrcnt] = arr[cnt];
+				newarrcnt++;
+			}
+		}
+		for(int cnt = 0; cnt < cntQ; cnt++) {
+			newarr[newarrcnt + cnt] = queue.poll();
+		}
+		
+		return newarr;
+	}
 }
